@@ -1,26 +1,31 @@
-import React, { useState } from 'react';
-import { Plus, X } from 'lucide-react';
+import React, { useState } from "react";
+import { Plus, X } from "lucide-react";
 
 interface Param {
   key: string;
   value: string;
 }
 
-export default function ParamsPanel() {
-  const [params, setParams] = useState<Param[]>([]);
-  const [newKey, setNewKey] = useState('');
-  const [newValue, setNewValue] = useState('');
+export interface ParamsPanelProps {
+  params: Param[];
+  addParam: (params: Param[]) => void;
+}
+
+export default function ParamsPanel({ addParam, params }: ParamsPanelProps) {
+  // const [params, setParams] = useState<Param[]>([]);
+  const [newKey, setNewKey] = useState("");
+  const [newValue, setNewValue] = useState("");
 
   const handleAdd = () => {
     if (newKey && newValue) {
-      setParams([...params, { key: newKey, value: newValue }]);
-      setNewKey('');
-      setNewValue('');
+      addParam([...params, { key: newKey, value: newValue }]);
+      setNewKey("");
+      setNewValue("");
     }
   };
 
   const handleRemove = (index: number) => {
-    setParams(params.filter((_, i) => i !== index));
+    addParam(params.filter((_, i) => i !== index));
   };
 
   return (
